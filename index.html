@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crypto AI</title>
+</head>
+
+<body style="background:#0b0f1a;color:white;font-family:sans-serif;">
+
+<h2>CryptoMind AI</h2>
+
+<div id="chat"></div>
+
+<input id="input" placeholder="Ask..." />
+<button onclick="send()">Send</button>
+
+<script>
+async function send(){
+  const text = input.value;
+
+  const res = await fetch('/api/chat', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({ message: text })
+  });
+
+  const data = await res.json();
+
+  const div = document.createElement("div");
+  div.innerText = "AI: " + data.reply;
+  chat.appendChild(div);
+}
+</script>
+
+</body>
+</html>
