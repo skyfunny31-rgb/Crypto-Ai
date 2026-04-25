@@ -14,7 +14,15 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    console.log("FULL RESPONSE:", JSON.stringify(data)); // debug
+
+    let reply = "No response";
+
+    if (data.candidates && data.candidates.length > 0) {
+      const parts = data.candidates[0].content.parts;
+      reply = parts.map(p => p.text).join(" ");
+    }
 
     res.status(200).json({ reply });
 
